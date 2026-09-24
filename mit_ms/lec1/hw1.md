@@ -98,7 +98,17 @@ ls /nonexistent /tmp
 and redirect stdout to one file and stderr to another. How
 would you redirect both to the same file? See *Redirections*.
 
-**A:** 
+**A:** To redirect stdout to one file and stderr to another:
+
+```bash
+ls /nonexistent /tmp > q4out.txt 2> q4err.txt
+```
+
+To redirect both to the same file:
+
+```bash
+ls /nonexistent /tmp > q4both.txt 2>&1
+```
 
 ### 5. Exit status and control operators
 
@@ -108,11 +118,23 @@ would you redirect both to the same file? See *Redirections*.
 that creates `/tmp/mydir` only if it doesn't already exist.
 See *Exit Status*.
 
+**A:** Consider the shell script below:
+
+```bash
+[ -d /tmp/mydir ] || mkdir /tmp/mydir
+```
+
 ### 6. Why `cd` is a builtin
 
 Why does `cd` have to be built into the shell itself rather
 than a standalone program? (Hint: think about what a child
 process can and cannot affect in its parent.)
+
+**A:** Whenever almost any other command is run,
+Bash creates a child process to complete the task and then returns.
+If this were the case with `cd`,
+then it would change the directory for the child process,
+but leave the parent process unchanged.
 
 ### 7. File existence check script
 
