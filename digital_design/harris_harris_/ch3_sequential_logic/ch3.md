@@ -26,10 +26,9 @@ Under what circumstances is each one preferable?
 enable signal is high.
 A flip-flop is edge-triggered,
 typically synchronized to the positive edge of the clock.
-A flip-flop can be preferrable in many cases such as storing 
-intermediate values between datapath stages.
-A latch can be preferrable when passing data between modules
-via handshakes.
+Flip-flops are the default in synchronous design because they make 
+timing analysis simple: data moves once per clock edge
+Latches are preferred when you need small area and low power.
 
 ### Question 3.4
 
@@ -56,13 +55,10 @@ greater performance.
 Describe what it means for a flip-flop to have a negative hold
 time.
 
-**A:** This akin to the flip-flop's setup time.
-During this period of time,
-the input must be stable to ensure that the output takes on the 
-correct value.
-If the input changes during this time,
-it is possible that the output still takes on the correct value,
-but we cannot guarantee its metastability.
+**A:** The data is allowed to change before the clock edge and the
+output will still capture the correct value.
+This typically occurs when the clock path inside the flip-flop is
+slower than the data path.
 
 ### Question 3.9
 
@@ -72,7 +68,11 @@ If you add a buffer on the clock input of the receiver (the
 second flip-flop),
 does the setup time constraint get better or worse?
 
-**A:** The setup time constraint gets worse as the positive edge
-of the clock reaches the receiver more quickly.
-Accordingly, the setup time is advanced,
-meaning that the input must reach the receiver sooner.
+**A:** The setup time constraint gets better as the positive edge
+of the clock reaches the receiver more slowly.
+Accordingly, the setup time is delayed,
+meaning that the input can reach the receiver later.
+
+Setup:  Tcq + Tpd,max + Tsetup + Tskew <= Tc
+
+Hold:   Tcq + Tpd,min >= Thold + Tskew
