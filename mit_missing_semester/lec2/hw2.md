@@ -1,0 +1,188 @@
+# Lecture 2 Exercises — Command-line Environment
+
+## Arguments and Globs
+
+### 1. `--`
+
+You might see commands like `cmd --flag -- --notaflag`. The `--` is a special argument that tells the program to stop parsing flags. Everything after `--` is treated as a positional argument.
+
+Why might this be useful? Try running `touch -- -myfile` and then removing it without `--`.
+
+### 2. `ls` flags
+
+Read `man ls` and write an `ls` command that lists files in the following manner:
+
+- Includes all files, including hidden files
+- Sizes are listed in human readable format (e.g. `454M` instead of `454279954`)
+- Files are ordered by recency
+- Output is colorized
+
+Sample output:
+
+```text
+-rw-r--r--   1 user group 1.1M Jan 14 09:53 baz
+drwxr-xr-x   5 user group  160 Jan 14 09:53 .
+-rw-r--r--   1 user group  514 Jan 14 06:42 bar
+-rw-r--r--   1 user group 106M Jan 13 12:12 foo
+drwx------+ 47 user group 1.5K Jan 12 18:08 ..
+```
+
+### 3. Process substitution
+
+Process substitution `<(command)` lets you use a command's output as if it were a file. Use `diff` with process substitution to compare the output of `printenv` and `export`. Why are they different?
+
+Hint:
+
+```bash
+diff <(printenv | sort) <(export | sort)
+```
+
+## Environment Variables
+
+### 4. `marco` and `polo`
+
+Write bash functions `marco` and `polo` that do the following: whenever you execute `marco`, the current working directory should be saved in some manner. When you execute `polo`, no matter what directory you are in, `polo` should `cd` you back to the directory where you executed `marco`.
+
+For ease of debugging, write the code in a file `marco.sh` and (re)load the definitions to your shell by executing `source marco.sh`.
+
+## Return Codes
+
+### 5. Run until failure
+
+Say you have a command that fails rarely. In order to debug it you need to capture its output, but it can be time consuming to get a failure run.
+
+Write a bash script that runs the following script until it fails, captures its standard output and error streams to files, and prints everything at the end. Bonus points if you can also report how many runs it took for the script to fail.
+
+```bash
+#!/usr/bin/env bash
+
+n=$(( RANDOM % 100 ))
+
+if [[ $n -eq 42 ]]; then
+   echo "Something went wrong"
+   >&2 echo "The error was using magic numbers"
+   exit 1
+fi
+
+echo "Everything went according to plan"
+```
+
+## Signals and Job Control
+
+### 6. `pgrep` and `pkill`
+
+Start a `sleep 10000` job in a terminal, background it with `Ctrl-Z`, and continue its execution with `bg`. Now use `pgrep` to find its pid and `pkill` to kill it without ever typing the pid itself.
+
+Hint: use the `-lf` flags.
+
+### 7. `wait`
+
+Say you don't want to start a process until another completes. In this exercise, our limiting process will always be `sleep 60 &`. One way to achieve this is to use the `wait` command.
+
+Try launching the `sleep` command and having an `ls` wait until the background process finishes.
+
+### 8. `pidwait`
+
+The `wait` strategy fails if we start in a different bash session, since `wait` only works for child processes.
+
+The `kill` command's exit status will be zero on success and nonzero otherwise. `kill -0` does not send a signal but will give a nonzero exit status if the process does not exist.
+
+Write a bash function called `pidwait` that takes a pid and waits until the given process completes. You should use `sleep` to avoid wasting CPU unnecessarily.
+
+## Files and Permissions
+
+### 9. (Advanced) Most recently modified file
+
+Write a command or script to recursively find the most recently modified file in a directory. More generally, can you list all files by recency?
+
+## Terminal Multiplexers
+
+### 10. `tmux`
+
+Follow the tmux tutorial and then learn how to do some basic customizations following the linked steps.
+
+## Aliases and Dotfiles
+
+### 11. `dc` alias
+
+Create an alias `dc` that resolves to `cd` for when you type it wrong.
+
+### 12. Top 10 commands
+
+Run the following to get your top 10 most used commands and consider writing shorter aliases for them.
+
+```bash
+history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10
+```
+
+Note: this works for Bash; if you're using ZSH, use `history 1` instead of just `history`.
+
+### 13. Dotfiles folder
+
+Create a folder for your dotfiles and set up version control.
+
+### 14. First configuration
+
+Add a configuration for at least one program, e.g. your shell, with some customization (to start off, it can be something as simple as customizing your shell prompt by setting `$PS1`).
+
+### 15. Install script
+
+Set up a method to install your dotfiles quickly (and without manual effort) on a new machine. This can be as simple as a shell script that calls `ln -s` for each file, or you could use a specialized utility.
+
+### 16. Test on a fresh VM
+
+Test your installation script on a fresh virtual machine.
+
+### 17. Migrate configurations
+
+Migrate all of your current tool configurations to your dotfiles repository.
+
+### 18. Publish
+
+Publish your dotfiles on GitHub.
+
+## Remote Machines (SSH)
+
+Install a Linux virtual machine (or use an already existing one) for these exercises. If you are not familiar with virtual machines, check out a tutorial for installing one.
+
+### 19. SSH keys
+
+Go to `~/.ssh/` and check if you have a pair of SSH keys there. If not, generate them with:
+
+```bash
+ssh-keygen -a 100 -t ed25519
+```
+
+It is recommended that you use a password and use `ssh-agent`.
+
+### 20. `.ssh/config`
+
+Edit `.ssh/config` to have an entry as follows:
+
+```text
+Host vm
+    User username_goes_here
+    HostName ip_goes_here
+    IdentityFile ~/.ssh/id_ed25519
+    LocalForward 9999 localhost:8888
+```
+
+### 21. `ssh-copy-id`
+
+Use `ssh-copy-id vm` to copy your ssh key to the server.
+
+### 22. Port forwarding
+
+Start a webserver in your VM by executing `python -m http.server 8888`. Access the VM webserver by navigating to `http://localhost:9999` on your machine.
+
+### 23. Harden `sshd`
+
+Edit your SSH server config by doing `sudo vim /etc/ssh/sshd_config` and disable password authentication by editing the value of `PasswordAuthentication`. Disable root login by editing the value of `PermitRootLogin`. Restart the ssh service with `sudo service sshd restart`. Try sshing in again.
+
+### 24. (Challenge) `mosh`
+
+Install `mosh` in the VM and establish a connection. Then disconnect the network adapter of the server/VM. Can mosh properly recover from it?
+
+### 25. (Challenge) `-N` and `-f`
+
+Look into what the `-N` and `-f` flags do in `ssh` and figure out a command to achieve background port forwarding.
