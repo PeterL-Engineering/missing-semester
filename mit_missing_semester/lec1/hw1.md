@@ -143,6 +143,8 @@ and checks whether the file exists using `test -f` or
 `[ -f ... ]`. It should print different messages depending on
 whether the file exists. See *Bash Conditional Expressions*.
 
+**A:** See `q7.sh`.
+
 ### 8. Making a script executable
 
 Save the script from the previous exercise to a file (e.g.,
@@ -161,11 +163,17 @@ chmod +x check.sh
 and try again. Why is this step necessary? (Hint: look at
 `ls -l check.sh` before and after the `chmod`.)
 
+**A:** Typically, the file will not have permission to execute by default.
+Adding +x enables the `.sh` to be executed.
+
 ### 9. Debugging with `set -x`
 
 What happens if you add `-x` to the set flags in a script?
 Try it with a simple script and observe the output. See
 *The Set Builtin*.
+
+**A:** `set -x` makes bash print each command after expansion to stderr
+before running it, prefixed with `+`.
 
 ### 10. Command substitution
 
@@ -174,6 +182,8 @@ date in the filename (e.g., `notes.txt` →
 `notes_2026-01-12.txt`). (Hint: `$(date +%Y-%m-%d)`.) See
 *Command Substitution*.
 
+**A:** See `q10.sh`.
+
 ### 11. Flexible test script
 
 Modify the flaky test script from the lecture to accept the
@@ -181,11 +191,15 @@ test command as an argument instead of hardcoding
 `cargo test my_test`. (Hint: `$1` or `$@`.) See
 *Special Parameters*.
 
+**A:** Skipped!
+
 ### 12. Pipes — file extension frequency
 
 Use pipes to find the 5 most common file extensions in your
 home directory. (Hint: combine `find`, `grep`/`sed`/`awk`,
 `sort`, `uniq -c`, and `head`.)
+
+**A:** See `q12.sh`.
 
 ### 13. `xargs` — line counts
 
