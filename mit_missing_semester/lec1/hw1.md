@@ -209,6 +209,8 @@ home directory. (Hint: combine `find`, `grep`/`sed`/`awk`,
 `wc -l`. Bonus: make it handle filenames with spaces. (Hint:
 `-print0` and `-0`.) See `man xargs`.
 
+**A:** See `q13.sh`.
+
 ### 14. `curl` + `grep`
 
 Use `curl` to fetch the HTML of the course website
@@ -216,6 +218,8 @@ Use `curl` to fetch the HTML of the course website
 count how many lectures are listed. (Hint: look for a pattern
 that appears once per lecture; use `curl -s` to silence the
 progress output.)
+
+**A:** See `q14.sh`.
 
 ### 15. `jq` — JSON extraction
 
@@ -230,7 +234,7 @@ to see the structure; then try:
 jq '.[] | select(...) | .name'
 ```
 
-)
+**A:** See `q15.sh`.
 
 ### 16. `awk` — column filtering and swapping
 
@@ -249,6 +253,8 @@ and swaps the first and third columns. Test with:
 ```bash
 printf 'a 50 x\nb 150 y\nc 200 z\n'
 ```
+
+**A:** See `q16.sh`.
 
 ### 17. SSH log pipeline
 
