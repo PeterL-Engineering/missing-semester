@@ -61,7 +61,7 @@ int* mergesort(int *arr, int arrSize) {
 }
 
 int main() {
-  int arr[] = {5, 2, 9, 1, 5, 6};
+  int arr[] = {3, 1, 4, 1, 5, 9, 2, 6};
   int n = sizeof(arr) / sizeof(arr[0]);
 
   int *sorted = mergesort(arr, n);
