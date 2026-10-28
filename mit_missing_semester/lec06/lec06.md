@@ -69,6 +69,19 @@ Versioning or SemVer (MAJOR.MINOR.PATCH)
     - MAJOR (eg., 1.2.3 -> 2.0.0) indicates breaking changes that
     may require code modifications
 
-## Reproducibility
-
 ## VMs & Containers
+- VMs are used to provide access to system-level dependencies
+(GPU drivers, specific compiler versions) or when dependencies span
+beyond the boundaries of a package manager
+- Containers are a modern approach which package an application,
+its dependencies, libraries, but share the host's OS kernel
+    - Avoid creating unecessary layers
+    - Clean up package manager caches
+    - Copy from the prebuilt binary also known as the *builder* pattern
+
+## Configuration
+- Code base should be deployable to different environments with only
+configuration changes,
+never code changes
+- Applications can be configuraed via a configuration file such as
+`config.yaml`
