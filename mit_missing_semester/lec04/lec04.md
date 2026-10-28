@@ -1,4 +1,4 @@
-# Lecture 4 Exercises — Debugging and Profiling
+# Lecture 4 — Debugging and Profiling
 
 ### General-Purpose Debuggers
 - `gdb` is the de facto standaed debugger for C, C++, Rust, and 
