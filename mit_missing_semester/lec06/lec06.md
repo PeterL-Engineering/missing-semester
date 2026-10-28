@@ -55,3 +55,20 @@ build-backend = "setuptools.build_meta"
 the package using `uv build`
     - This does not address platform-specific libraries such as CUDA,
     nor platforms/architectures
+
+## Releases & Versioning
+- Changes in the behaviour of a library can range from patches, 
+new features that extend functionality,
+to changes that breaking backwards compatibility
+- The most prevalent convention to version software is Semantic
+Versioning or SemVer (MAJOR.MINOR.PATCH)
+    - PATCH (eg., 1.2.3 -> 1.2.4) should only contain bug fixes and 
+    be fully backwards compatible
+    - MINOR (eg., 1.2.3 -> 1.3.0) adds new functionality in a
+    backwards-compatible way
+    - MAJOR (eg., 1.2.3 -> 2.0.0) indicates breaking changes that
+    may require code modifications
+
+## Reproducibility
+
+## VMs & Containers
