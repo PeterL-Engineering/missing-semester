@@ -1,7 +1,7 @@
 ## MIT CSAIL - Missing Semester
 
-This repo contains notes and homework problems for CSAIL's "Missing 
-Semester" course.
+This repo contains notes and homework problems for CSAIL's "[Missing 
+Semester](https://missing.csail.mit.edu/)" course.
 Topics covered include shell scripting, CLI and development environments,
 version control, profiling, and other miscellaneous skills/tools.
 
