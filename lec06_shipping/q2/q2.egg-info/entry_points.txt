@@ -1,0 +1,2 @@
+[console_scripts]
+greet = q2:cli
